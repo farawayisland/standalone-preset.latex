@@ -1,0 +1,19 @@
+% ~/Library/texmf/tex/latex/standalone-preset/patches/standalone-preset-patches-early.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{standalone-preset-patches-early}[2025/06/01 The%
+  patching-oriented package of the `standalone-preset` bundle which is loaded%
+early]
+
+% \RequirePackage{silence} % Selective filtering of error messages
+% and warnings
+\RequirePackage{scrbook-preset-library} % The library package of
+% the `scrbook-preset` bundle
+
+% PACKAGE MANAGEMENT
+%% Disable `caption`
+\disablepackage{caption}{}
+
+% WARNING AND ERROR FILTERING
+%% \WarningFilter{blindtext}{greek not defined}
+
+\endinput
