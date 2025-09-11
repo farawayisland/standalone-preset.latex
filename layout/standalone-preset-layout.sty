@@ -1,0 +1,200 @@
+% ~/Library/texmf/tex/latex/standalone-preset/layout/standalone-preset-layout.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{standalone-preset-layout}[2025/06/01 The layout package of%
+the `standalone-preset` bundle]
+
+\RequirePackage{datetime2} % Formats for dates, times and time zones
+\RequirePackage{enumitem} % Control layout of itemize, enumerate, description
+\RequirePackage{setspace} % Set space between lines
+\RequirePackage{tabularray} % Typeset tabulars and arrays with LaTeX3
+
+% STANDALONE ENVIRONMENTS
+%% `page` with headers and footers
+%% Source: https://tex.stackexchange.com/a/751237
+\newcommand*{\oddlefthead}{}
+\newcommand*{\oddcenterhead}{}
+\newcommand*{\oddrighthead}{}
+\newcommand*{\oddleftfoot}{}
+\newcommand*{\oddcenterfoot}{}
+\newcommand*{\oddrightfoot}{}
+\newcommand*{\evenlefthead}{}
+\newcommand*{\evencenterhead}{}
+\newcommand*{\evenrighthead}{}
+\newcommand*{\evenleftfoot}{}
+\newcommand*{\evencenterfoot}{}
+\newcommand*{\evenrightfoot}{}
+\newenvironment{page}{
+  \begin{minipage}[b]{453.666pt}
+    %\stepcounter{page}%
+    \ifodd\value{page}%
+    \hbox to \textwidth
+    {\rlap{\oddlefthead}\hfill{\oddcenterhead}\hfill\llap{\oddrighthead}}
+    \else
+    \hbox to \textwidth
+    {\rlap{\evenlefthead}\hfill{\evencenterhead}\hfill\llap{\evenrighthead}}
+    \fi%\rule{0pt}{\headheight}
+  \vskip35.2105pt\bgroup\onehalfspacing}% body (make setspace local)
+  {\par\egroup\vskip35.2105pt\ifodd\value{page}%
+    \hbox to \textwidth
+    {\rlap{\oddleftfoot}\hfill{\oddcenterfoot}\hfill{\llap{\oddrightfoot}}}
+    \else
+    \hbox to \textwidth
+    {\rlap{\evenleftfoot}\hfill{\evencenterfoot}\hfill\llap{\evenrightfoot}}
+    \fi
+  \end{minipage}%
+}
+
+% TITLE PAGE
+%% Raised hyphen in date format
+%% Source: https://tex.stackexchange.com/a/168603
+\let\oldhyphen-
+\def\newhyphen{\raisebox{0.2ex}{\oldhyphen}}
+\catcode`-\active
+\def\newhyphenON{\catcode`-\active\def-{\newhyphen}}
+\def\newhyphenOFF{\catcode`-=12\let-\oldhyphen}
+\catcode`-=12
+
+\newhyphenON
+\DTMsetup{datesep=-}
+\newhyphenOFF
+
+% LAYOUTS OF LIST ENVIRONMENTS
+%% `enumitem` list environments
+\setlist{%
+  nosep,
+  align = left,
+  labelsep = 3.5pt,
+  itemindent = 0pt,
+  font = \normalsize\normalfont,
+  before = \normalsize\normalfont
+}
+
+%% `enumerate`
+\setlist[enumerate]{%
+  leftmargin = \widthof{00.} + 3.5pt,
+  label = \arabic*.,
+  labelwidth = \widthof{00.}
+}
+\setlist[enumerate, 1]{align = right}
+
+%% `EnumerateQuestions` (custom)
+\newlist{EnumerateQuestions}{enumerate}{2}
+\setlist[EnumerateQuestions]{%
+  leftmargin = \widthof{Q0.} + 3.5pt,
+  label = Q\arabic*.,
+  labelwidth = \widthof{Q0.}
+}
+\setlist[EnumerateQuestions, 1]{%
+  leftmargin = \widthof{\textbf{Q0.}} + 3.5pt,
+  align = right,
+  labelwidth = \widthof{\textbf{Q0.}},
+  font = \normalsize\bfseries
+}
+
+%% `EnumerateSubquestions` (custom)
+\newlist{EnumerateSubquestions}{enumerate}{2}
+\setlist[EnumerateSubquestions]{%
+  leftmargin = \widthof{(m)} + 3.5pt,
+  label = (\alph*),
+  labelwidth = \widthof{(m)}
+}
+\setlist[EnumerateSubquestions, 1]{%
+  leftmargin = \widthof{\textbf{(m)}} + 3.5pt,
+  labelwidth = \widthof{\textbf{(m)}},
+  font = \normalsize\bfseries
+}
+
+%% `EnumerateAnswers` (custom)
+\newlist{EnumerateAnswers}{enumerate}{2}
+\setlist[EnumerateAnswers]{%
+  leftmargin = \widthof{A0.} + 3.5pt,
+  label = A\arabic*.,
+  labelwidth = \widthof{A0.}
+}
+\setlist[EnumerateAnswers, 1]{%
+  leftmargin = \widthof{\textbf{A0.}} + 3.5pt,
+  align = right,
+  labelwidth = \widthof{\textbf{A0.}},
+  font = \normalsize\bfseries
+}
+
+%% `EnumerateSubanswers` (custom)
+\newlist{EnumerateSubanswers}{enumerate}{2}
+\setlist[EnumerateSubanswers]{%
+  leftmargin = \widthof{(m)} + 3.5pt,
+  label = (\alph*),
+  labelwidth = \widthof{(m)}
+}
+\setlist[EnumerateSubanswers, 1]{%
+  leftmargin = \widthof{\textbf{(m)}} + 3.5pt,
+  labelwidth = \widthof{\textbf{(m)}},
+  font = \normalsize\bfseries
+}
+
+%% `itemize`
+\setlist[itemize, 1]{%
+  leftmargin = \widthof{\rtextbullet} + \widthof{\ },
+  label = \raisebox{-0.05ex}{\rtextbullet},
+  labelwidth = \widthof{\rtextbullet},
+  labelsep = \widthof{\ }
+}
+\setlist[itemize, 2]{%
+  leftmargin = \widthof{\textsquarebullet} + \widthof{\ },
+  label = \raisebox{-0.05ex}{\textsquarebullet},
+  labelwidth = \widthof{\textsquarebullet},
+  labelsep = \widthof{\ }
+}
+
+%% `ItemizeSolutionParts` (custom)
+\newlist{ItemizeSolutionParts}{itemize}{1}
+\setlist[ItemizeSolutionParts]{%
+  leftmargin = \widthof{\textbf{\rtextbullet}} + \widthof{\ },
+  label = \raisebox{-0.05ex}{\rtextbullet},
+  labelwidth = \widthof{\textbf{\rtextbullet}},
+  labelsep = \widthof{\ },
+  font = \normalsize\bfseries
+}
+
+%% Custom `enumerate` environment which ensures that the text of each
+%% \item will be entirely contained on the same page
+%% Sources:
+%% https://tex.stackexchange.com/a/43005
+%% https://tex.stackexchange.com/q/56435
+%% https://tex.stackexchange.com/a/76495
+\newlength{\currentparskip}
+\newcommand{\MyItem}{%
+\item}
+\newtoggle{FirstItem}%
+\toggletrue{FirstItem}
+\toggletrue{FirstItem}%
+\newenvironment{MyEnumerate}[1][]{%
+  \renewcommand{\MyItem}{%
+    \iftoggle{FirstItem}{%
+      \global\togglefalse{FirstItem}
+      \setlength{\currentparskip}{\parskip}% save the value
+      %--------- start new minipage
+      \par\addvspace{\baselineskip}\noindent
+      \begin{minipage}{\textwidth}%
+        \setlength{\parskip}{\currentparskip}% restore the value
+        \begin{enumerate}[#1,series=MySeries]%
+          }{%
+        \end{enumerate}%
+      \end{minipage}%
+      %--------- end previous minipage and start new one
+      \par\addvspace{\baselineskip}\noindent
+      \begin{minipage}{\textwidth}%
+        \setlength{\parskip}{\currentparskip}% restore the value
+        \begin{enumerate}[#1,resume*=MySeries]%
+          }%
+        \item\mbox{}%
+        }%
+      }{%
+    \end{enumerate}%
+  \end{minipage}% --------- end last minipage
+  \global\toggletrue{FirstItem}%
+}%
+
+% LAYOUTS OF TABULAR ENVIRONMENTS
+%% Custom column types
+
+\endinput

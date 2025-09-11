@@ -1,0 +1,26 @@
+% ~/Library/texmf/tex/latex/standalone-preset/patches/standalone-preset-patches-early.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{standalone-preset-patches-early}[2025/06/01 The%
+  patching-oriented package of the `standalone-preset` bundle which is loaded%
+early]
+
+% \RequirePackage{silence} % Selective filtering of error messages
+% and warnings
+
+% PACKAGE MANAGEMENT
+%% Package-disabling macros
+%% Source: https://tex.stackexchange.com/a/39418
+\makeatletter
+\newcommand{\disablepackage}[2]{%
+  \disable@package@load{#1}{#2}%
+}
+\newcommand{\reenablepackage}[1]{%
+  \reenable@package@load{#1}%
+}
+\makeatother
+\disablepackage{caption}{}
+
+% WARNING AND ERROR FILTERING
+%% \WarningFilter{blindtext}{greek not defined}
+
+\endinput
