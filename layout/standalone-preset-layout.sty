@@ -5,24 +5,34 @@ the `standalone-preset` bundle]
 
 \RequirePackage{datetime2} % Formats for dates, times and time zones
 \RequirePackage{enumitem} % Control layout of itemize, enumerate, description
+\RequirePackage{scrbook-preset-layout-languages} % The languages module of the
+% layout package of the `scrbook-preset` bundle
+\RequirePackage{scrbook-preset-library} % The library package of
+% the `scrbook-preset` bundle
 \RequirePackage{setspace} % Set space between lines
 \RequirePackage{tabularray} % Typeset tabulars and arrays with LaTeX3
 
 % STANDALONE ENVIRONMENTS
 %% `page` with headers and footers
 %% Source: https://tex.stackexchange.com/a/751237
-\newcommand*{\oddlefthead}{}
+\newcommand*{\oddlefthead}{%
+  \ifnum\value{page}=1%
+  \textbf{\textsf{\@author}}%
+  \fi
+}
 \newcommand*{\oddcenterhead}{}
-\newcommand*{\oddrighthead}{}
+\newcommand*{\oddrighthead}{\textbf{\textsf{\@title}}}
 \newcommand*{\oddleftfoot}{}
-\newcommand*{\oddcenterfoot}{}
+\newcommand*{\oddcenterfoot}{\pagemark}
 \newcommand*{\oddrightfoot}{}
-\newcommand*{\evenlefthead}{}
+\newcommand*{\evenlefthead}{\textbf{\textsf{\@title}}}
 \newcommand*{\evencenterhead}{}
 \newcommand*{\evenrighthead}{}
 \newcommand*{\evenleftfoot}{}
-\newcommand*{\evencenterfoot}{}
+\newcommand*{\evencenterfoot}{\pagemark}
 \newcommand*{\evenrightfoot}{}
+\definelength{\headruleheight}{0.8pt}
+\definelength{\footruleheight}{0.4pt}
 \newenvironment{page}{
   \begin{minipage}[b]{453.666pt}
     %\stepcounter{page}%
@@ -33,7 +43,10 @@ the `standalone-preset` bundle]
     \hbox to \textwidth
     {\rlap{\evenlefthead}\hfill{\evencenterhead}\hfill\llap{\evenrighthead}}
     \fi%\rule{0pt}{\headheight}
-  \vskip35.2105pt\bgroup\onehalfspacing}% body (make setspace local)
+    \vskip 5.2105pt
+    \hrule height \headruleheight\vskip
+  30pt\bgroup\onehalfspacing\setlength{\parindent}{1.5em}}%
+  % body (make `setspace` macros local)
   {\par\egroup\vskip35.2105pt\ifodd\value{page}%
     \hbox to \textwidth
     {\rlap{\oddleftfoot}\hfill{\oddcenterfoot}\hfill{\llap{\oddrightfoot}}}
@@ -41,8 +54,7 @@ the `standalone-preset` bundle]
     \hbox to \textwidth
     {\rlap{\evenleftfoot}\hfill{\evencenterfoot}\hfill\llap{\evenrightfoot}}
     \fi
-  \end{minipage}%
-}
+\end{minipage}}
 
 % TITLE PAGE
 %% Raised hyphen in date format
@@ -58,6 +70,10 @@ the `standalone-preset` bundle]
 \DTMsetup{datesep=-}
 \newhyphenOFF
 
+% SECTION CONTENTS
+%% Paragraph indentation
+\setlength{\parindent}{1.5em}
+
 % LAYOUTS OF LIST ENVIRONMENTS
 %% `enumitem` list environments
 \setlist{%
@@ -65,6 +81,7 @@ the `standalone-preset` bundle]
   align = left,
   labelsep = 3.5pt,
   itemindent = 0pt,
+  listparindent = \parindent,
   font = \normalsize\normalfont,
   before = \normalsize\normalfont
 }
@@ -103,6 +120,13 @@ the `standalone-preset` bundle]
   labelwidth = \widthof{\textbf{(m)}},
   font = \normalsize\bfseries
 }
+\setlist[EnumerateSubquestions, 2]{%
+  leftmargin = \widthof{(iii)} + 3.5pt + 3.5pt,
+  label = (\roman*),
+  labelwidth = \widthof{(iii)} + 3.5pt,
+  listparindent = 0pt,
+  font = \normalsize
+}
 
 %% `EnumerateAnswers` (custom)
 \newlist{EnumerateAnswers}{enumerate}{2}
@@ -129,6 +153,13 @@ the `standalone-preset` bundle]
   leftmargin = \widthof{\textbf{(m)}} + 3.5pt,
   labelwidth = \widthof{\textbf{(m)}},
   font = \normalsize\bfseries
+}
+\setlist[EnumerateSubanswers, 2]{%
+  leftmargin = \widthof{(iii)} + 3.5pt + 3.5pt,
+  label = (\roman*),
+  labelwidth = \widthof{(iii)} + 3.5pt,
+  listparindent = 0pt,
+  font = \normalsize
 }
 
 %% `itemize`
