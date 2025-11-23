@@ -32,6 +32,7 @@ the `standalone-preset` bundle]
 \newcommand*{\evencenterfoot}{\pagemark}
 \newcommand*{\evenrightfoot}{}
 \definelength{\headruleheight}{0.8pt}
+\definelength{\defaultparindent}{1.5em}
 \definelength{\footruleheight}{0.4pt}
 \newenvironment{page}{
   \begin{minipage}[b]{453.666pt}
@@ -45,7 +46,7 @@ the `standalone-preset` bundle]
     \fi%\rule{0pt}{\headheight}
     \vskip 5.2105pt
     \hrule height \headruleheight\vskip
-  30pt\bgroup\onehalfspacing\setlength{\parindent}{1.5em}}%
+  30pt\bgroup\onehalfspacing\setlength{\parindent}{\defaultparindent}}%
   % body (make `setspace` macros local)
   {\par\egroup\vskip35.2105pt\ifodd\value{page}%
     \hbox to \textwidth
@@ -72,7 +73,7 @@ the `standalone-preset` bundle]
 
 % SECTION CONTENTS
 %% Paragraph indentation
-\setlength{\parindent}{1.5em}
+\setlength{\parindent}{\defaultparindent}
 
 % FOOTNOTES
 %% Sources:
